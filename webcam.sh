@@ -1,16 +1,30 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
-# take a webcam image and a screenshot (add /usr/sbin/ prefix when you run it as cronjob)
-isightcapture -w 640 -h 480 -t jpg ~/Pictures/isight/$(date +%Y%m%d_%H-%M-%S)-webcam.jpg
-imagesnap -q ~/Pictures/isight/$(date +%Y%m%d_%H-%M-%S)-webcam.jpg
-screencapture -C -m -t jpg -x ~/Pictures/isight/$(date +%Y%m%d_%H-%M-%S)-screenshot.jpg
+IMAGE_DIR=~/Pictures/.isight
+IMAGE_NAME=$(date +%Y%m%d_%H-%M-%S)-webcam.jpg
+IMAGE="$IMAGE_DIR/$IMAGE_NAME"
 
-# upload it to my lovely server (i use ubersapce) (perhaps /usr/bin/ prefix required)
-scp ~/Pictures/isight/* user@server:"pic/"
-#if [ $? -eq "1" ]; then # on ssh error (no internet)
-#else # no error
-#fi
-# delete local (so no one discovers these images)
-rm -f ~/Pictures/isight/*.jpg
+HOST=u.seeh.in
+REMOTE_DIR=pic/
 
-# consider of deleting old images on the server (only when there was no error)
+# take snapshot from webcam
+/usr/local/bin/imagesnap -v -w 1 "$IMAGE"
+
+# upload image(s)
+/usr/bin/scp -v $IMAGE_DIR/* $HOST:$REMOTE_DIR 2>> /tmp/hourlyImageSCP.log
+
+# evaluaate upload result
+if [ $? -eq "1" ]; then
+   echo "upload error"
+else
+  # tweet image
+  ~/.rbenv/shims/t update -f=$IMAGE "$(date)"
+  if [ $? -eq "1" ]; then
+    echo "tweet error"
+  else
+    echo 'tweeted'
+    # remove image if uploaded and tweeted successfully
+    rm $IMAGE_DIR/*.jpg
+  fi
+fi
+

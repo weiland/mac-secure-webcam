@@ -1,11 +1,22 @@
-# Protect your mac by uploading webcam imgaes and sreenshots
+# Hourly webcam snapshot
+
+## Installation
+
+### Required software
+* imagesnap (`brew install imagesnap`)
+
+### Clone
+```sh
+git clone https://github.com/weiland/mac-secure-webcam
+```
 
 ### ToDo
-- replace `~/Pictures/isight/` with your path to save the isight images
-(dont use your main Pictures folder)
-- replace `user@server:"pic/"` witch your username and server
-(you should have set up ssh keys for a 'passwordless connection')
-- it is up to you how you want to run that script (on start, via cronjob)
+* adjust variables in `webcam.sh`
+* adjust contents of `run.app` (to match path)
+* create a (hourly) cronjob like
+```sh
+# change the path to your run.app
+0 * * * * open ~/code/hourly-image/run.app >> ~/cron.log 2>&1
+```
 
-The **isightcapture** bin is attached to this repository.
-feel free to copy it to your `/usr/sbin` 
+The `run.app` is required to be able to access the webcam.
