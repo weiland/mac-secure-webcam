@@ -25,6 +25,7 @@ sh ~/code/hourly-image/webcam.sh >> ~/code/hourly-image/wrapper.log 2>&1
 ```sh
 # change the path to your run.app
 0 * * * * open ~/code/hourly-image/run.app >> ~/hourly-image/cron.log 2>&1
+01 * * * * sh ~/src/github.com/weiland/mac-secure-webcam/tweet.sh >> /tmp/cron.log 2>&1
 ```
 * if you also want to tweet the photos setup [t](https://github.com/sferik/t)
 * otherwise just remove the tweet line from the `webcam.sh`
