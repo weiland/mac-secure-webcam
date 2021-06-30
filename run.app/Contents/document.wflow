@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>sh ~/code/hourly-image/webcam.sh &gt;&gt; ~/code/hourly-image/wrapper.log 2&gt;&amp;1
+					<string>sh ~/src/github.com/weiland/mac-secure-webcam/webcam.sh &gt;&gt; /tmp/webcam-wrapper.log 2&gt;&amp;1
 </string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
