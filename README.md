@@ -1,4 +1,8 @@
-# Hourly webcam snapshot
+# Hourly webcam snapshot [Archived]
+
+> This repo has been replaced with https://github.com/weiland/HourlyImage
+> A rewrite of this tool in Swift so there is only one _.app_ that does everything.
+
 
 ## Installation
 
